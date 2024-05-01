@@ -5,7 +5,7 @@ using Pathfinding;
 
 public class PointAndClickLevel1 : MonoBehaviour
 {
-    public AIDestinationSetter aiDestSet;
+    public AIDestinationSetter playerAIDestSet;
     private Vector3 ourTarget;
     public Transform room1Detect;
     public Transform room2Detect;
@@ -18,7 +18,7 @@ public class PointAndClickLevel1 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerAIDestSet = GetComponent<AIDestinationSetter>();
     }
 
     // Update is called once per frame
@@ -31,19 +31,20 @@ public class PointAndClickLevel1 : MonoBehaviour
         {
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
 
-            if (hit.collider != null)
+            if (hit.collider != null && ( playerAIDestSet.target == null || Vector2.Distance(playerAIDestSet.target.position,transform.position) < 0.1f))
             {
+               
                 if (hit.collider.gameObject.transform == room1Detect)
                 {
-                    aiDestSet.target = room1StandPos;
+                    playerAIDestSet.target = room1StandPos;
                 }
                 else if (hit.collider.gameObject.transform == room2Detect)
                 {
-                    aiDestSet.target = room2StandPos;
+                    playerAIDestSet.target = room2StandPos;
                 }
                 else if (hit.collider.gameObject.transform == frontDeskDetect)
                 {
-                    aiDestSet.target = frontDeskStandPos;
+                    playerAIDestSet.target = frontDeskStandPos;
                 }
             }
             else
