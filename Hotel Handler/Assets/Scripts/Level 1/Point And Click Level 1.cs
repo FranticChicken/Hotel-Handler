@@ -27,33 +27,45 @@ public class PointAndClickLevel1 : MonoBehaviour
 
         
             //use 0 for left mouse button and 1 for right mouse button
-        if (Input.GetMouseButtonDown(1))
+        if ((playerAIDestSet.target == null || Vector2.Distance(playerAIDestSet.target.position, transform.position) < 0.1f) && Input.GetMouseButtonDown(1))
         {
-            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-
-            if (hit.collider != null && ( playerAIDestSet.target == null || Vector2.Distance(playerAIDestSet.target.position,transform.position) < 0.1f))
+            //RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+            Vector2 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Collider2D[] colliders = Physics2D.OverlapPointAll(worldPoint);
+            bool found = false;
+            for (int i = 0; i < colliders.Length; i++)
             {
-               
-                if (hit.collider.gameObject.transform == room1Detect)
+                Collider2D currentCollider = colliders[i];
+                Debug.Log("Collider Overlap[" + i + "]: " + currentCollider.gameObject.name);
+                if (currentCollider.gameObject.transform == room1Detect)
                 {
+                    found = true;
                     playerAIDestSet.target = room1StandPos;
+                    break;
                 }
-                else if (hit.collider.gameObject.transform == room2Detect)
+                else if (currentCollider.gameObject.transform == room2Detect)
                 {
+                    found = true;
                     playerAIDestSet.target = room2StandPos;
+                    break;
                 }
-                else if (hit.collider.gameObject.transform == frontDeskDetect)
+                else if (currentCollider.gameObject.transform == frontDeskDetect)
                 {
+                    found = true;
                     playerAIDestSet.target = frontDeskStandPos;
+                    break;
                 }
             }
-            else
+
+            if(!found)
             {
                 Debug.Log("no collider");
             }
 
             
         }
+
+
 
            
     }
