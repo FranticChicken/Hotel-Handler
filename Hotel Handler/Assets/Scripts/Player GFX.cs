@@ -30,10 +30,6 @@ public class PlayerGFX : MonoBehaviour
         }
 
 
-        Vector2 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, worldPoint - (Vector2)transform.position);
-
-        Debug.DrawLine(transform.position, hit.point, Color.red);
+        
     }
 }

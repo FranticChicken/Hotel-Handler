@@ -65,8 +65,13 @@ public class PointAndClickLevel1 : MonoBehaviour
             
         }
 
+        //these 3 lines show the use of a raycast in the scene window
+        Vector2 otherWorldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, otherWorldPoint - (Vector2)transform.position);
+
+        Debug.DrawLine(transform.position, hit.point, Color.red);
 
 
-           
     }
 }
